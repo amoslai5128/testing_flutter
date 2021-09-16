@@ -80,7 +80,6 @@ final testOrderCRUD = RM.injectCRUD<Order?, String>(
   readOnInitialization: true, // NOTE Must add this line.
   persist: () => PersistState(
     key: '__Order__',
-    persistStateProvider: SharedPreferencesStore()..init(),
     toJson: (List<Order?> orders) {
       print('TO JSON');
       final mappedOrders = (orders).map((o) => o?.toMap()).toList();
