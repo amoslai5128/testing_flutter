@@ -38,7 +38,7 @@ class Order {
 class OrderRepository implements ICRUD<Order, String> {
   @override
   Future<List<Order>> read(String? param) async {
-    print('READ');
+    print('READ FROM SERVER');
 
     await Future.delayed(Duration(seconds: 2)); // Fake latency
     final fakeOrders =
@@ -77,9 +77,11 @@ class OrderRepository implements ICRUD<Order, String> {
 /* ----------------------------- Injected State ----------------------------- */
 final testOrderCRUD = RM.injectCRUD<Order?, String>(
   () => OrderRepository(),
-  readOnInitialization: true, // NOTE Must add this line.
+  readOnInitialization: true,
   persist: () => PersistState(
     key: '__Order__',
+    catchPersistError: true,
+    debugPrintOperations: true,
     toJson: (List<Order?> orders) {
       print('TO JSON');
       final mappedOrders = (orders).map((o) => o?.toMap()).toList();

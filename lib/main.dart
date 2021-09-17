@@ -5,7 +5,10 @@ import 'package:states_rebuilder/states_rebuilder.dart';
 
 import 'state.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await RM.storageInitializer(SharedPreferencesStore());
+
   runApp(MyApp());
 }
 
@@ -13,8 +16,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    RM.storageInitializer(SharedPreferencesStore());
-
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -43,14 +44,19 @@ class MyHomePage extends StatelessWidget {
                   onPressed: () async {
                     // Fetch data from CRUD (Online)
                     await testOrderCRUD.crud.read();
+                    testOrderCRUD.persistState();
                   },
                   child: const Text('Fetch Online Data ')),
-              ElevatedButton(
-                  onPressed: () {
-                    // Refresh the state, then it'll auto-query back the cache data from localDB
-                    testOrderCRUD.refresh();
-                  },
-                  child: const Text('Refresh & Query from LocalDB')),
+              OnBuilder.data(
+                  listenTo: testOrderCRUD,
+                  builder: (data) {
+                    return ElevatedButton(
+                        onPressed: () {
+                          // Refresh the state, then it'll auto-query back the cache data from localDB
+                          print(data);
+                        },
+                        child: const Text('Refresh & Query from LocalDB'));
+                  }),
               ElevatedButton(
                   onPressed: () {
                     // Delete the cache from localDB
