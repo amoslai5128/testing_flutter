@@ -47,16 +47,12 @@ class MyHomePage extends StatelessWidget {
                     testOrderCRUD.persistState();
                   },
                   child: const Text('Fetch Online Data ')),
-              OnBuilder.data(
-                  listenTo: testOrderCRUD,
-                  builder: (data) {
-                    return ElevatedButton(
-                        onPressed: () {
-                          // Refresh the state, then it'll auto-query back the cache data from localDB
-                          print(data);
-                        },
-                        child: const Text('Refresh & Query from LocalDB'));
-                  }),
+              ElevatedButton(
+                  onPressed: () {
+                    // Refresh the state
+                    testOrderCRUD.refresh();
+                  },
+                  child: const Text('Refresh & Query from LocalDB')),
               ElevatedButton(
                   onPressed: () {
                     // Delete the cache from localDB
