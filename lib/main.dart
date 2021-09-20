@@ -41,18 +41,20 @@ class MyHomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               ElevatedButton(
-                  onPressed: () async {
-                    // Fetch data from CRUD (Online)
-                    await testOrderCRUD.crud.read();
-                    testOrderCRUD.persistState();
-                  },
-                  child: const Text('Fetch Online Data ')),
+                onPressed: () async {
+                  // Fetch data from CRUD (Online)
+                  await testOrderCRUD.crud.read();
+                  testOrderCRUD.persistState();
+                },
+                child: const Text('Fetch Online Data '),
+              ),
               ElevatedButton(
-                  onPressed: () {
-                    // Refresh the state
-                    testOrderCRUD.refresh();
-                  },
-                  child: const Text('Refresh & Query from LocalDB')),
+                onPressed: () {
+                  // Refresh the state
+                  testOrderCRUD.refresh();
+                },
+                child: const Text('Refresh & Query from LocalDB'),
+              ),
               ElevatedButton(
                   onPressed: () {
                     // Delete the cache from localDB
